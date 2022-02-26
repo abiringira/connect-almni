@@ -1,0 +1,64 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include layouts/headerDoctor.ejs %>	
+
+	 <div id="content">
+        <!-- insert the page content here -->
+       
+        <div class="content-wrapper-inner centerize padded-tb">
+
+					<div class="card add-student-card transparent-white">
+					<div class="card-header">
+						<div class="card-title h5 text-brown">Confirmation Email</div>
+						<div class="card-subtitle text-light"></div>
+					</div>
+					<div class="divider"></div>
+					<div class="card-body">
+            <form class="form-horizontal" action="/users/sendEmail/<%= id %>" method="post" name="form1">
+             
+              <!-- Email -->
+              <div class="form-group">
+                <div class="col-3 col-sm-12">
+                  <label class="form-label" for="email">Email</label>
+                </div>
+                <div class="col-9 col-sm-12">
+                  <input class="form-input"  name="email" id="email" value="<%= email %>">
+                </div>
+                </div>
+
+                   <!-- Message -->
+              <div class="form-group">
+                <div class="col-3 col-sm-12">
+                  <label for="subject" class="form-label">Subject</label>
+                </div>
+                <div class="col-9 col-sm-12">
+                  <input class="form-input"  name="subject" id="subject" value="Counsellor Appointment Approval">
+                </div>
+              </div>
+              <!-- Message -->
+              <div class="form-group">
+                <div class="col-3 col-sm-12">
+                  <label for="message" class="form-label">Message</label>
+                </div>
+                <div class="col-9 col-sm-12">
+                  <textarea class="contact textarea" rows="8" cols="50" id="message" name="message"></textarea>
+                </div>
+              </div>
+
+              <!-- Send -->
+						<div class="padded-tb">
+							<button class="btn-block btn btn-primary bg-brown text-white" type="submit">Send Notification</button>
+						</div>
+
+            </form>
+          
+          </div> 
+        </div>   
+      </div>   
+    </div>   
+  </div>   
+</div>   
+</div>   
+</div>        
+   </div>

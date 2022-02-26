@@ -1,0 +1,155 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../layouts/header.ejs %>	
+
+
+<% if (messages.error) { %>
+	<div id="toast" class="toast toast-error">
+			<button id="btn-clear" class="btn btn-clear float-right"></button>
+			<%- messages.error %>
+		</div>
+<% } %>
+
+<% if (messages.success) { %>
+	<div id="toast" class="toast toast-success">
+			<button id="btn-clear" class="btn btn-clear float-right"></button>
+			<%- messages.success %>
+		</div>
+<% } %>
+
+<div class="content-wrapper--outer padded add-student-bg">
+    
+	  
+	<div class="content-wrapper-inner centerize padded-tb">
+
+					<div class="card add-student-card transparent-white">
+					<div class="card-header">
+						<div class="card-title h5 text-brown">Create Account</div>
+						<div class="card-subtitle text-light"></div>
+					</div>
+					<div class="divider"></div>
+					<div class="card-body">
+					<form class="form-horizontal"  action="/users/signup" method="post">
+						<!-- First Name -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+							<label class="form-label" for="fname">First Name</label>
+							</div>
+							<div class="col-9 col-sm-12">
+							<input class="form-input" name="fname" id="fname" value="<%= fname %>" placeholder="First Name">
+							</div>
+						</div>
+						<!-- Last Name -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+								<label class="form-label" for="lname">Last Name</label>
+							</div>
+							<div class="col-9 col-sm-12">
+								<input class="form-input"  name="lname" id="lname" value="<%= lname %>" placeholder="Name">
+							</div>
+							</div>
+						
+						<!-- Mobile -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+								<label for="mobile" class="form-label">Phone Number</label>
+							</div>
+							<div class="col-9 col-sm-12">
+								<input type="tel" name="mobile" value="<%= mobile %>" class="form-input" placeholder="0788000000">
+							</div>
+						</div>
+						<!-- Email -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+								<label for="email" class="form-label">Email</label>
+							</div>
+							<div class="col-9 col-sm-12">
+								<input type="email" name="email" value="<%= email %>" class="form-input" placeholder="hello@gmail.com">
+							</div>
+                        </div>
+						
+						
+						<!-- username -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+								<label for="username" class="form-label">username</label>
+							</div>
+							<div class="col-9 col-sm-12">
+								<input id="username" name="username" value="<%= username %>" class="form-input" placeholder="username">
+							</div>
+						</div>
+                        <!-- password -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+								<label for="pwd" class="form-label">password</label>
+							</div>
+							<div class="col-9 col-sm-12">
+								<input type="password" name="pwd" value="<%= pwd %>" class="form-input" placeholder="password">
+							</div>
+						</div>
+						<!-- gender -->
+						<div class="form-group">
+								<div class="col-3 col-sm-12">
+									<label for="gender" class="form-label">Gender</label>
+								</div>
+								<div class="col-9 col-sm-12">
+									<select name="gender" class="form-select">
+										<option value="male">Male</option>
+										<option value="female">Female</option>
+									</select>
+								</div>
+							</div>
+						<!-- id -->
+						<div class="form-group">
+								<div class="col-3 col-sm-12">
+									<label for="identity" class="form-label">ID/Passport</label>
+								</div>
+								<div class="col-9 col-sm-12">
+									<input class="form-input" value="<%= identity %>" name="identity" placeholder="1199090099992020" />
+								</div>
+							</div>
+						<!-- secondary -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+								<label for="center" class="form-label">Center</label>
+							</div>
+							
+							<div class="col-9 col-sm-12">
+								
+								<select name="center"  class="form-select">
+									<option value="Solidminds">Solidminds</option>
+									<option value="Live Again">Live Again</option>
+									<option value="CHUK">CHUK</option>
+									<option value="KFH">KFH</option>
+									<option value="Rwanda Military Hospital">Rwanda Military Hospital</option>
+									<option value="Ndera Hospital">Ndera Hospital</option>
+									<option value="Icyizere Center">Icyizere Center</option>
+									<option value="Rwanda Biomedical Center">Rwanda Biomedical Center</option>
+									<option value="Rwanda Biomedical Center">HVP Gatagara</option>
+								</select>
+							</div>
+							
+						</div>
+				
+						
+						<!-- Submit -->
+						<div class="padded-tb">
+							<button class="btn-block btn btn-primary bg-brown text-white" type="submit">Add New Doctor</button>
+						</div>
+						</form>
+						   </div>
+						  </div>
+					  	</div>
+				     </div>
+		         </div>
+
+</div>
+
+
+<!--
+including footer content which is common for all pages
+-->
+<%- include ../layouts/footer.ejs %>
+
+

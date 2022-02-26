@@ -1,0 +1,75 @@
+
+<!--
+including header content which is common for all pages
+-->
+<%- include ../layouts/header.ejs %>	
+	
+		
+<% if (messages.error) { %>
+	<div id="toast" class="toast toast-error">
+			<button id="btn-clear" class="btn btn-clear float-right"></button>
+			<%- messages.error %>
+		</div>
+<% } %>
+
+<% if (messages.success) { %>
+	<div id="toast" class="toast toast-success">
+			<button id="btn-clear" class="btn btn-clear float-right"></button>
+			<%- messages.success %>
+		</div>
+<% } %>
+
+<div class="content-wrapper--outer edit-student-bg padded">
+  
+	<div class="card edit-student-card transparent-white">
+			<div class="card-header">
+				<div class="card-title h5 text-brown">Edit Center</div>
+				<div class="card-subtitle text-light">Fill in form</div>
+			</div>
+			<div class="divider"></div>
+			<div class="card-body">
+			<form class="form-horizontal" action="/users/edit/<%= id %>" method="post" name="form1">
+				<!-- First Name -->
+				<div class="form-group">
+					<div class="col-3 col-sm-12">
+					<label class="form-label" for="name"> Name</label>
+					</div>
+					<div class="col-9 col-sm-12">
+					<input class="form-input" name="name" id="name" value="<%= name %>" placeholder=" Name">
+					</div>
+				</div>
+				<!-- Last Name -->
+				<div class="form-group">
+					<div class="col-3 col-sm-12">
+						<label class="form-label" for="district">Location </label>
+					</div>
+					<div class="col-9 col-sm-12">
+						<input class="form-input"  name="district" id="district" value="<%= district %>" placeholder="Location">
+					</div>
+					</div>
+				<!-- Age -->
+				
+				<!-- Submit -->
+				<div class="padded-tb">
+					<button class="btn-block btn btn-primary bg-brown text-white" type="submit">Edit Information</button>
+				</div>
+				<input type="hidden" name="_method" value="PUT" />
+				</form>
+				</div>
+				</div>
+				</div>
+
+
+
+			</div>
+</div>
+
+
+
+
+
+<!--
+including footer content which is common for all pages
+-->
+<%- include ../layouts/footer.ejs %>
+

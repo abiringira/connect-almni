@@ -1,0 +1,75 @@
+html
+{ height: 100%;}
+
+*
+{ margin: 0;
+  padding: 0;}
+
+body
+{ font: normal .80em 'trebuchet ms', arial, sans-serif;
+  background: #FFF;
+  color: #555;}
+
+.padded{
+    padding: 0.8rem;
+}
+.padded-tb{
+    padding: 0.8rem 0;
+}
+.padded-lr{
+    padding: 0 0.8rem;
+}
+label{
+    color: #f1f1f1;
+}
+
+.vert-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.centerize{
+    max-width: 1080px;
+    margin: 0 auto;
+}
+.transparent-white{
+    background: rgba(255,255,255,0.5);
+}
+.shadow{
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    border-radius: .25rem !important;
+}
+.content-wrapper--outer{
+    min-height:90vh;
+}
+.bg-brown{
+    background: 	#006400 !important;
+    border-color: 	#006400 !important;
+}
+.text-brown{
+    color: 	#006400 !important;
+}
+.lg-feature{
+    background-size: cover !important;
+    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/static/images/image2.jpeg') center center no-repeat;
+}
+.add-student-bg{
+    background-size: cover !important;
+    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/static/images/image1.jpg') center right no-repeat;
+}
+.edit-student-bg{
+    background-size: cover !important;
+    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/static/images/edit-student.jpg') center right no-repeat;
+}
+.edit-student-card{
+    max-width: 768px;
+    margin: 0 auto;
+}
+.toast{
+    text-align:center;
+    transition: 0.5s ease-in-out;
+}
+.hide{
+    display: none;
+    transition: 0.5s ease-in-out;
+}

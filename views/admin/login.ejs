@@ -1,0 +1,75 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../layouts/headerUser.ejs %>	
+
+
+<% if (messages.error) { %>
+	<div id="toast" class="toast toast-error">
+			<button id="btn-clear" class="btn btn-clear float-right"></button>
+			<%- messages.error %>
+		</div>
+<% } %>
+
+<% if (messages.success) { %>
+	<div id="toast" class="toast toast-success">
+			<button id="btn-clear" class="btn btn-clear float-right"></button>
+			<%- messages.success %>
+		</div>
+<% } %>
+
+<div class="content-wrapper--outer padded add-student-bg">
+  
+	<div class="content-wrapper-inner centerize padded-tb">
+
+					<div class="card add-student-card transparent-white">
+					<div class="card-header">
+						<div class="card-title h5 text-brown"> Account Login</div>
+						<div class="card-subtitle text-light"></div>
+					</div>
+					<div class="divider"></div>
+					<div class="card-body">
+					<form class="form-horizontal"  action="/users/login/" method="post">
+						<!-- Username -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+							<label class="form-label" for="username">username</label>
+							</div>
+							<div class="col-9 col-sm-12">
+							<input class="form-input" name="username" id="username" value="<%= username %>" placeholder="username">
+							</div>
+						</div>
+						<!-- Password -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+								<label class="form-label" for="pwd">password</label>
+							</div>
+							<div class="col-9 col-sm-12">
+								<input class="form-input" type ="password"  name="pwd" id="pwd"  placeholder="password">
+							</div>
+                            </div>
+						<!-- Submit -->
+						<div class="padded-tb">
+							<button class="btn-block btn btn-primary bg-brown text-white" type="submit">Login</button>
+						</div>
+						
+						</form>
+						</div>
+						</div>
+						</div>
+
+
+
+				  </div>
+		
+	</div>
+
+</div>
+
+
+<!--
+including footer content which is common for all pages
+-->
+<%- include ../layouts/footerUser.ejs %>
+
+

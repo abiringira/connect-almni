@@ -1,0 +1,209 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../layouts/headerUser.ejs %>	
+
+
+<% if (messages.error) { %>
+	<div id="toast" class="toast toast-error">
+			<button id="btn-clear" class="btn btn-clear float-right"></button>
+			<%- messages.error %>
+		</div>
+<% } %>
+
+<% if (messages.success) { %>
+	<div id="toast" class="toast toast-success">
+			<button id="btn-clear" class="btn btn-clear float-right"></button>
+			<%- messages.success %>
+		</div>
+<% } %>
+
+<div class="content-wrapper--outer padded add-student-bg">
+    <!-- <form action="/users/add" method="post" >
+		<table width="25%" border="0">
+			<tr> 
+				<td>First Name</td>
+				<td><input type="text" name="fname" id="fname" value="<%= fname %>" /></td>
+			</tr>
+			<tr> 
+				<td>Last Name</td>
+				<td><input type="text" name="lname" id="lname" value="<%= lname %>" /></td>
+			</tr>
+			<tr> 
+				<td>Age</td>
+				<td><input type="text" name="age" value="<%= age %>" /></td>
+			</tr>
+			<tr> 
+				<td>Mobile</td>
+				<td><input type="text" name="mobile" value="<%= mobile %>" /></td>
+			</tr>
+			<tr> 
+				<td>Email</td>
+				<td><input type="text" name="email" value="<%= email %>" /></td>
+			</tr>
+			<tr> 
+				<td></td>
+				<td><input type="submit" name="Submit" value="Add" /></td>
+			</tr>
+		</table>
+	</form> -->
+
+	  
+	<div class="content-wrapper-inner centerize padded-tb">
+
+					<div class="card add-student-card transparent-white">
+					<div class="card-header">
+						<div class="card-title h5 text-brown">Request New Appointment</div>
+						<div class="card-subtitle text-light">Fill in form</div>
+					</div>
+					<div class="divider"></div>
+					<div class="card-body">
+					<form class="form-horizontal"  action="/users/add" method="post">
+						<!-- First Name -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+							<label class="form-label" for="fname">First Name</label>
+							</div>
+							<div class="col-9 col-sm-12">
+							<input class="form-input" name="fname" id="fname" value="<%= fname %>" placeholder="First Name">
+							</div>
+						</div>
+						<!-- Last Name -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+								<label class="form-label" for="lname">Last Name</label>
+							</div>
+							<div class="col-9 col-sm-12">
+								<input class="form-input"  name="lname" id="lname" value="<%= lname %>" placeholder="Name">
+							</div>
+							</div>
+						<!-- Age -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+								<label for="age" class="form-label">Age</label>
+							</div>
+							<div class="col-9 col-sm-12">
+								<input type="number" name="age" value="<%= age %>" class="form-input" placeholder="21">
+							</div>
+						</div>
+						<!-- Mobile -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+								<label for="mobile" class="form-label">Phone Number</label>
+							</div>
+							<div class="col-9 col-sm-12">
+								<input type="tel" name="mobile" value="<%= mobile %>" class="form-input" placeholder="0788000000">
+							</div>
+						</div>
+						<!-- Email -->
+						<div class="form-group">
+							<div class="col-3 col-sm-12">
+								<label for="email" class="form-label">Email</label>
+							</div>
+							<div class="col-9 col-sm-12">
+								<input type="email" name="email" value="<%= email %>" class="form-input" placeholder="hello@gmail.com">
+							</div>
+						</div>
+						<!-- gender -->
+						<div class="form-group">
+								<div class="col-3 col-sm-12">
+									<label for="gender" class="form-label">Gender</label>
+								</div>
+								<div class="col-9 col-sm-12">
+									<select name="gender" class="form-select">
+										<option value="male">Male</option>
+										<option value="female">Female</option>
+									</select>
+								</div>
+							</div>
+						<!-- id -->
+						<div class="form-group">
+								<div class="col-3 col-sm-12">
+									<label for="identity" class="form-label">ID/Passport</label>
+								</div>
+								<div class="col-9 col-sm-12">
+									<input class="form-input" value="<%= identity %>" name="identity" placeholder="1199090099992020" />
+								</div>
+							</div>
+						<!-- secondary -->
+						
+						<!-- transcript -->
+						<!-- faculty -->
+						<div class="form-group">
+								<div class="col-3 col-sm-12">
+									<label for="district" class="form-label">Center</label>
+								</div>
+								
+								<div class="col-9 col-sm-12">
+									
+									<select name="district"  class="form-select">
+										<option value="Solidminds">Solidminds</option>
+										<option value="Live Again">Live Again</option>
+										<option value="CHUK">CHUK</option>
+										<option value="KFH">KFH</option>
+										<option value="Rwanda Military Hospital">Rwanda Military Hospital</option>
+										<option value="Ndera Hospital">Ndera Hospital</option>
+										<option value="Icyizere Center">Icyizere Center</option>
+										<option value="Rwanda Biomedical Center">Rwanda Biomedical Center</option>
+										<option value="Rwanda Biomedical Center">HVP Gatagara</option>
+									</select>
+								</div>
+								
+							</div>
+
+
+
+
+
+							
+
+							<div class="form-group">
+								<div class="col-3 col-sm-12">
+									<label for="doctor class="form-label">Counsellor</label>
+								</div>
+								<div class="col-9 col-sm-12">
+									
+									<select name="doctor"  class="form-select">
+										<option value="Dr. Kayiteshonga Yvonne">Dr. Kayiteshonga Yvonne</option>
+										<option value="Dr Rutakayisire Bizoza">Dr Rutakayisire Bizoza</option>
+										<option value="Dr. Kibaki Aristide">Dr. Kibaki Aristide</option>
+										<option value="Dr. Jean Paul Vuguziga">Dr. Jean Paul Vuguziga</option>
+										<option value="Dr. lt Col Dr Schadrack NGAMIJE">Dr. lt Col Dr Schadrack NGAMIJE</option>
+										<option value="Dr. Georges Ruterana">Dr. Georges Ruterana</option>
+										<option value="Dr. Charles Mudenge">Dr. Charles Mudenge</option>
+										<option value="Dr. Simon Kanyandekwe">Dr. Simon Kanyandekwe</option>
+										<option value="Dr. Theophile Dushime">Dr. Theophile Dushime</option>
+									</select>
+								</div>
+								
+								
+								
+							</div>
+					
+						<!-- session -->
+						
+						<!-- Submit -->
+						<div class="padded-tb">
+							<button class="btn-block btn btn-primary bg-brown text-white" type="submit">Submit</button>
+						</div>
+						
+						</form>
+						</div>
+						</div>
+						</div>
+
+
+
+				  </div>
+		
+	</div>
+
+</div>
+
+
+<!--
+including footer content which is common for all pages
+-->
+<%- include ../layouts/footerUser.ejs %>
+
+
