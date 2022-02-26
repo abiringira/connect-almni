@@ -13,7 +13,6 @@ var ObjectId = require('mongodb').ObjectId;
 	var dbcol1;
 	var dbcol2;
 	
-	//const mongoDbUrl = 'mongodb+srv://emmy:emmy@cluster0-2tj0h.mongodb.net/test?retryWrites=true';
    // Connect to MongoDB
 	mongoClient.connect(mongoDbUrl).then(db => {
 		console.log('mongodb connected');
