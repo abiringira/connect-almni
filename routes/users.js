@@ -8,7 +8,7 @@ var urlencodedParser = bodyParser.urlencoded({extended:false});
 var ObjectId = require('mongodb').ObjectId;
 
 	const mongoClient = require('mongodb').MongoClient;
-	const mongoDbUrl = 'mongodb://localhost:27017/e_appointment';
+	const mongoDbUrl = 'mongodb://localhost:27017/connect_alumni';
 	var dbcol;
 	var dbcol1;
 	var dbcol2;
@@ -89,7 +89,7 @@ app.get('/doctorview', function(req, res, next) {
 
 
 
-app.get('/adminview', function(req, res, next) {	
+app.get('/login', function(req, res, next) {	
 	// fetch and sort users collection by id in descending order
 	dbcol1.find().sort({"_id": -1}).toArray (function(err, result) {
 		//if (err) return console.log(err)
@@ -190,7 +190,7 @@ app.get('/signup', function(req, res, next){
 		gender: '',
 		identity: '',
 		username: '',
-		pwd: '',
+		password: '',
 		center:''   		
 	});
 });
@@ -203,7 +203,7 @@ app.post('/signup', function(req, res, next){
 	req.assert('gender', 'Please fill in student gender').notEmpty();
 	req.assert('identity', 'Student ID is required').notEmpty(); 
 	req.assert('username', 'username is required').notEmpty(); 
-	req.assert('pwd', 'pwd name is required').notEmpty(); 
+	req.assert('password', 'password name is required').notEmpty(); 
 	req.assert('center', 'center name is required').notEmpty(); 
 	 
     var errors = req.validationErrors();
@@ -217,7 +217,7 @@ app.post('/signup', function(req, res, next){
 			gender: req.sanitize('gender').escape().trim(),
 			identity: req.sanitize('identity').escape().trim(),
 			username: req.sanitize('username').escape().trim(),
-			pwd: req.sanitize('pwd').escape().trim(),
+			password: req.sanitize('password').escape().trim(),
 			center: req.sanitize('center').escape().trim(),
 
 		};
@@ -236,7 +236,7 @@ app.post('/signup', function(req, res, next){
 					email: user.email,
 					gender: user.gender,
 					username: user.username,
-					pwd: user.pwd,
+					password: user.password,
 					center: user.center
 									
 				});
@@ -279,17 +279,17 @@ app.get('/login', function(req, res, next){
 		title: 'Account Login',
 		id :'',
 		username: '',
-		pwd: ''   		
+		password: ''   		
 	});
 });
 
 app.post('/login',urlencodedParser,function(req,res){
 
 	req.assert('username', 'username is required').notEmpty();
-	req.assert('pwd', 'password name is required').notEmpty();
+	req.assert('password', 'password name is required').notEmpty();
 	
 	 const userName = req.body.username;
-	 const passWord = req.body.pwd;
+	 const passWord = req.body.password;
 	dbcol1.findOne({username: userName},function(err, userData) {
 			  if(userData ===null){
 				req.flash('error', "User doesn't exist!!Please contact system adminstrator");
@@ -300,9 +300,9 @@ app.post('/login',urlencodedParser,function(req,res){
 				password: ''   
 
 			   });
-			 }else if (userData.username === userName && userData.pwd === passWord){
-				   if(userData.username === 'admin') {
-					res.redirect('/users/adminview')
+			 } else if (userData.username === userName && userData.password === passWord) {
+				   if(userData.username === 'admin@log.com') {
+					res.redirect('/users/login')
 				   } else {
 					res.redirect('/users/doctorview')  
 				   }
@@ -315,7 +315,7 @@ app.post('/login',urlencodedParser,function(req,res){
 				title: 'Account Login',
 				id :'',
 				username: '',
-				pwd: ''   
+				password: ''   
 
 			   });
 	
