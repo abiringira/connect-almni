@@ -16,9 +16,9 @@ var ObjectId = require('mongodb').ObjectId;
    // Connect to MongoDB
 	mongoClient.connect(mongoDbUrl).then(db => {
 		console.log('mongodb connected');
-		dbcol = db.collection('appointments'); 
+		dbcol = db.collection('opportunities'); 
 		dbcol1 = db.collection('users');
-		dbcol2 = db.collection('center')
+		dbcol2 = db.collection('projects')
 		 // Reuse dbcol for DB CRUD operations
 		
 
@@ -89,7 +89,7 @@ app.get('/doctorview', function(req, res, next) {
 
 
 
-app.get('/login', function(req, res, next) {	
+app.get('/admin', function(req, res, next) {	
 	// fetch and sort users collection by id in descending order
 	dbcol1.find().sort({"_id": -1}).toArray (function(err, result) {
 		//if (err) return console.log(err)
@@ -302,7 +302,7 @@ app.post('/login',urlencodedParser,function(req,res){
 			   });
 			 } else if (userData.username === userName && userData.password === passWord) {
 				   if(userData.username === 'admin@log.com') {
-					res.redirect('/users/login')
+					res.redirect('/users/admin')
 				   } else {
 					res.redirect('/users/doctorview')  
 				   }
