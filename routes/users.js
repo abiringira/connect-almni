@@ -96,14 +96,14 @@ app.get('/admin', function(req, res, next) {
 		if (err) {
 			req.flash('error', err);
 			res.render('admin/login', {
-				title: 'Doctors List', 
+				title: 'List of Almnus', 
 				data: ''
 			});
 		} else {
 		
 			// render to views/user/list.ejs template file
 			res.render('admin/viewUsers', {
-				title: 'Doctors List', 
+				title: 'List of Almnus', 
 				data: result
 			});
 		}
@@ -188,10 +188,10 @@ app.get('/signup', function(req, res, next){
 	    mobile: '',
 		email: '',
 		gender: '',
-		identity: '',
+		studentID: '',
 		username: '',
 		password: '',
-		center:''   		
+		graduationYear:''   		
 	});
 });
 
@@ -201,10 +201,10 @@ app.post('/signup', function(req, res, next){
 	req.assert('mobile', 'Mobile Number is required').notEmpty();		//Validate age
 	req.assert('email', 'A valid email is required').isEmail();  //Validate email
 	req.assert('gender', 'Please fill in student gender').notEmpty();
-	req.assert('identity', 'Student ID is required').notEmpty(); 
+	req.assert('studentID', 'Student ID is required').notEmpty(); 
 	req.assert('username', 'username is required').notEmpty(); 
 	req.assert('password', 'password name is required').notEmpty(); 
-	req.assert('center', 'center name is required').notEmpty(); 
+	req.assert('graduationYear', 'graduation year is required').notEmpty(); 
 	 
     var errors = req.validationErrors();
     if( !errors ) {   //No errors were found.  Passed Validation!
@@ -215,10 +215,10 @@ app.post('/signup', function(req, res, next){
 			mobile: req.sanitize('mobile').escape().trim(),
 			email: req.sanitize('email').escape().trim(),
 			gender: req.sanitize('gender').escape().trim(),
-			identity: req.sanitize('identity').escape().trim(),
+			studentID: req.sanitize('studentID').escape().trim(),
 			username: req.sanitize('username').escape().trim(),
 			password: req.sanitize('password').escape().trim(),
-			center: req.sanitize('center').escape().trim(),
+			graduationYear: req.sanitize('graduationYear').escape().trim(),
 
 		};
 				 
@@ -332,7 +332,7 @@ app.post('/login',urlencodedParser,function(req,res){
 		if (err) {
 			req.flash('error', err);
 			res.render('/users', {
-				title: 'Doctors List', 
+				title: 'List of Almnus', 
 				data: ''
 			});
 		} else {

@@ -1,7 +1,7 @@
 <!--
 including header content which is common for all pages
 -->
-<%- include ../layouts/header.ejs %>	
+<%- include ../layouts/headerUser.ejs %>	
 
 
 <% if (messages.error) { %>
@@ -103,30 +103,30 @@ including header content which is common for all pages
 						<!-- id -->
 						<div class="form-group">
 								<div class="col-3 col-sm-12">
-									<label for="identity" class="form-label">ID/Passport</label>
+									<label for="studentID" class="form-label">StudentID</label>
 								</div>
 								<div class="col-9 col-sm-12">
-									<input class="form-input" value="<%= identity %>" name="identity" placeholder="1199090099992020" />
+									<input class="form-input" value="<%= studentID %>" name="studentID" placeholder="209568" />
 								</div>
 							</div>
 						<!-- secondary -->
 						<div class="form-group">
 							<div class="col-3 col-sm-12">
-								<label for="center" class="form-label">Center</label>
+								<label for="graduationYear" class="form-label">Graduation year</label>
 							</div>
 							
 							<div class="col-9 col-sm-12">
 								
-								<select name="center"  class="form-select">
-									<option value="Solidminds">Solidminds</option>
-									<option value="Live Again">Live Again</option>
-									<option value="CHUK">CHUK</option>
-									<option value="KFH">KFH</option>
-									<option value="Rwanda Military Hospital">Rwanda Military Hospital</option>
-									<option value="Ndera Hospital">Ndera Hospital</option>
-									<option value="Icyizere Center">Icyizere Center</option>
-									<option value="Rwanda Biomedical Center">Rwanda Biomedical Center</option>
-									<option value="Rwanda Biomedical Center">HVP Gatagara</option>
+								<select name="graduationYear"  class="form-select">
+									<option value="2012">2012</option>
+									<option value="2013">2013</option>
+									<option value="2014">2015</option>
+									<option value="2016">2016</option>
+									<option value="2017">2017</option>
+									<option value="2018">2018</option>
+									<option value="2019">2019</option>
+									<option value="2020">2020</option>
+									<option value="2021">2021</option>
 								</select>
 							</div>
 							
@@ -135,7 +135,7 @@ including header content which is common for all pages
 						
 						<!-- Submit -->
 						<div class="padded-tb">
-							<button class="btn-block btn btn-primary bg-brown text-white" type="submit">Add New Doctor</button>
+							<button class="btn-block btn btn-primary bg-brown text-white" type="submit">Sign In</button>
 						</div>
 						</form>
 						   </div>
@@ -150,6 +150,6 @@ including header content which is common for all pages
 <!--
 including footer content which is common for all pages
 -->
-<%- include ../layouts/footer.ejs %>
+<%- include ../layouts/footerUser.ejs %>
 
 
