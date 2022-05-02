@@ -181,7 +181,7 @@ app.post('/center', function(req, res, next){
 
 app.get('/signup', function(req, res, next){	
 	// render to views/user/add.ejs
-	res.render('admin/addDoctor', {
+	res.render('admin/addUser', {
 		title: 'Account Creation',
 		fname: '',
 		lname: '',
@@ -227,7 +227,7 @@ app.post('/signup', function(req, res, next){
 				req.flash('error', err);
 				
 				// render to views/user/add.ejs
-				res.render('admin/addDoctor', {
+				res.render('admin/addUser', {
 					title: 'Add New User',
 					fname: user.fname,
 					lname: user.lname,
