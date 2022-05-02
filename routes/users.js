@@ -32,17 +32,17 @@ var ObjectId = require('mongodb').ObjectId;
 
 	var smtpTransport = nodemailer.createTransport({
 		service: "gmail",
-		secure: true,
+		secure: false,
 		auth: {
-			user: "deborahkayin12@gmail.com",
-			pass: "consecration7"
+			user: "niyimukundacheline@gmail.com",
+			pass: "cheline1994"
 		},
 		debug: true
 	  });
 
 
 // SHOW LIST OF USERS
-app.get('/', function(req, res, next) {	
+app.get('/opportunities', function(req, res, next) {	
 	// fetch and sort users collection by id in descending order
 
 	dbcol.find().sort({"_id": -1}).toArray (function(err, result) {
@@ -50,15 +50,15 @@ app.get('/', function(req, res, next) {
 		console.log(result.toString());
 		if (err) {
 			req.flash('error', err);
-			res.render('appointment/list', {
-				title: 'Appointment List', 
+			res.render('requests/opportunities', {
+				title: 'Recent Opportunities', 
 				data: ''
 			});
 		} else {
 		
 			// render to views/user/list.ejs template file
-			res.render('appointment/list', {
-				title: 'Appointment List', 
+			res.render('requests/opportunities', {
+				title: 'Recent Opportunities', 
 				data: result
 			});
 		}
@@ -66,21 +66,21 @@ app.get('/', function(req, res, next) {
 });
 
 
-app.get('/doctorview', function(req, res, next) {	
+app.get('/projects', function(req, res, next) {	
 	// fetch and sort users collection by id in descending order
-	dbcol.find().sort({"_id": -1}).toArray (function(err, result) {
+	dbcol2.find().sort({"_id": -1}).toArray (function(err, result) {
 		//if (err) return console.log(err)
 		if (err) {
 			req.flash('error', err);
-			res.render('appointment/doctorviewList', {
-				title: 'Appointment List', 
+			res.render('requests/projects', {
+				title: 'Latest Projects', 
 				data: ''
 			});
 		} else {
 		
 			// render to views/user/list.ejs template file
-			res.render('appointment/doctorviewList', {
-				title: 'Appointment List', 
+			res.render('requests/projects', {
+				title: 'Latest Projects', 
 				data: result
 			});
 		}
@@ -291,7 +291,7 @@ app.post('/login',urlencodedParser,function(req,res){
 	 const userName = req.body.username;
 	 const passWord = req.body.password;
 	dbcol1.findOne({username: userName},function(err, userData) {
-			  if(userData ===null){
+			  if(userData === null){
 				req.flash('error', "User doesn't exist!!Please contact system adminstrator");
 			   res.render('admin/login',{
 				title: 'Account Login',
@@ -304,7 +304,7 @@ app.post('/login',urlencodedParser,function(req,res){
 				   if(userData.username === 'admin@log.com') {
 					res.redirect('/users/admin')
 				   } else {
-					res.redirect('/users/doctorview')  
+					res.redirect('/users/projects')  
 				   }
 				
 			
@@ -352,35 +352,20 @@ app.post('/login',urlencodedParser,function(req,res){
    });
    
 
-
- 
-
-
-
-
-
-
-
 // SHOW ADD USER FORM
 app.get('/add', function(req, res, next){	
 	// render to views/user/add.ejs
-	dbcol2.find().sort({"_id": -1}).toArray (function(err, centerresult) {
+	dbcol.find().sort({"_id": -1}).toArray (function(err, centerresult) {
 		//console.log(centerresult.toString());
-	res.render('appointment/add', {
-		title: 'Add New Appointment',
-		fname: '',
-		lname: '',
-		  age: '',
-	   mobile: '',
-		email: '',
-		gender: '',
-		identity: '',
-		district: '',
-		doctor: ''
-		
-		
-		
-	});
+		res.render('requests/addOpportunity', {
+			title: 'Post New Opportunity',
+			name: '',
+			type: '',
+			sector: '',
+			postedBy: '',
+			details: ''
+								
+		});
 	//res.json({Result : centerresult});
 	
    });
@@ -389,32 +374,25 @@ app.get('/add', function(req, res, next){
 
 
 
-// ADD NEW USER POST ACTION
+// ADD NEW OPPORTUNITY POST ACTION
 app.post('/add', function(req, res, next){	
-	req.assert('fname', 'First Name is required').notEmpty();          //Validate name
-	req.assert('lname', 'Last Name is required').notEmpty();
-	req.assert('age', 'Age is required').notEmpty();
-	req.assert('mobile', 'Mobile Number is required').notEmpty();		//Validate age
-	req.assert('email', 'A valid email is required').isEmail();  //Validate email
-	req.assert('gender', 'Please fill in patient gender').notEmpty();
-	req.assert('identity', 'ID is required').notEmpty(); 
-	req.assert('doctor', 'Counsellor name is required').notEmpty(); 
-	req.assert('district', 'Center name is required').notEmpty(); 
+	req.assert('name', 'Name is required').notEmpty();          //Validate name
+	req.assert('type', 'Type is required').notEmpty();
+	req.assert('sector', 'Sector is required').notEmpty();
+	req.assert('postedBy', 'Email is required').isEmail();		//Validate age
+	req.assert('details', 'Details required').notEmpty();  //Validate email
+	
 	 
 	
     var errors = req.validationErrors();
     if( !errors ) {   //No errors were found.  Passed Validation!
 		
 		var user = {
-			fname: req.sanitize('fname').escape().trim(),
-			lname: req.sanitize('lname').escape().trim(),
-			age: req.sanitize('age').escape().trim(),
-			mobile: req.sanitize('mobile').escape().trim(),
-			email: req.sanitize('email').escape().trim(),
-			gender: req.sanitize('gender').escape().trim(),
-			identity: req.sanitize('identity').escape().trim(),
-			doctor: req.sanitize('doctor').escape().trim(),
-			district: req.sanitize('district').escape().trim(),
+			name: req.sanitize('name').escape().trim(),
+			type: req.sanitize('type').escape().trim(),
+			sector: req.sanitize('sector').escape().trim(),
+			postedBy: req.sanitize('postedBy').escape().trim(),
+			details: req.sanitize('details').escape().trim(),
 			status:'Pending',
 			Date : 'Not Confirmed',
 			Time :'Not Confirmed',
@@ -427,21 +405,17 @@ app.post('/add', function(req, res, next){
 				req.flash('error', err);
 				
 				// render to views/user/add.ejs
-				res.render('appointment/add', {
-					title: 'Add New User',
-					fname: user.fname,
-					lname: user.lname,
-					age: user.age,
-					mobile: user.mobile,
-					email: user.email,
-					gender: user.gender,
-					identity: user.id,
-					doctor: user.doctor,
-					district: user.district,
+				res.render('requests/addOpportunity', {
+					title: 'Post New Opportunity',
+					name: user.name,
+					type: user.type,
+					sector: user.sector,
+					postedBy: user.postedBy,
+					details: user.details.JavascriptString.toString("utf8"),
 					status: 'pending'					
 				});
 			} else {				
-				req.flash('success', 'Appointment request successfully!We will send you a confirmation on your email ');
+				req.flash('success', 'Opportunity post request successfully!We will send you a confirmation on your email');
 				// redirect to user list page				
 				res.redirect('/users/add');
 			}
@@ -458,21 +432,117 @@ app.post('/add', function(req, res, next){
 		 * Using req.body.name 
 		 * because req.param('name') is deprecated
 		 */ 
-        res.render('appointment/add', { 
-            title: 'Add New User',
-            fname: req.body.fname,
-            lname: req.body.lname,
-            age: req.body.age,
-            mobile: req.body.mobile,
-			email: req.body.email,
-			gender: req.body.gender,
-			identity: req.body.identity,
-			province: req.body.province,
-			district: req.body.district,
-			counselor: req.body.counselor
-        });
+		res.render('requests/addOpportunity', {
+			title: 'Post New Opportunity',
+			name:  '',
+			type:  '',
+			sector: '',
+			postedBy: '',
+			details: '',
+			status: 'pending'					
+		});
     }
 });
+
+
+
+
+// SHOW ADD PROJECT FORM
+app.get('/addProject', function(req, res, next){	
+	// render to views/user/add.ejs
+	dbcol2.find().sort({"_id": -1}).toArray (function(err, centerresult) {
+		//console.log(centerresult.toString());
+		res.render('requests/addProject', {
+			title: 'Post New Project',
+			name: '',
+			manager: '',
+			sector: '',
+			postedBy: '',
+			details: ''
+								
+		});
+	//res.json({Result : centerresult});
+	
+   });
+   
+});
+
+
+
+// ADD NEW PROJECT POST ACTION
+app.post('/addProject', function(req, res, next){	
+	req.assert('name', 'Title is required').notEmpty();          //Validate name
+	req.assert('manager', 'Project Manager is required').notEmpty();
+	req.assert('sector', 'Sector is required').notEmpty();
+	req.assert('postedBy', 'Email is required').isEmail();		//Validate age
+	req.assert('details', 'Details required').notEmpty();  //Validate email
+	
+	 
+	
+    var errors = req.validationErrors();
+    if( !errors ) {   //No errors were found.  Passed Validation!
+		
+		var project = {
+			name: req.sanitize('name').escape().trim(),
+			manager: req.sanitize('manager').escape().trim(),
+			sector: req.sanitize('sector').escape().trim(),
+			postedBy: req.sanitize('postedBy').escape().trim(),
+			details: req.sanitize('details').escape().trim(),
+			status:'Pending',
+			Date : 'Not Confirmed',
+			Time :'Not Confirmed',
+		
+
+		};
+				 
+		dbcol2.insert(project, function(err, result) {
+			if (err) {
+				req.flash('error', err);
+				
+				// render to views/user/add.ejs
+				res.render('requests/addProject', {
+					title: 'Post New Project',
+					name: project.name,
+					manager: project.manager,
+					sector: project.sector,
+					postedBy: project.postedBy,
+					details: project.details.JavascriptString.toString("utf8"),
+					status: 'pending'					
+				});
+			} else {				
+				req.flash('success', 'Project post request successfully!We will send you a confirmation on your email');
+				// redirect to user list page				
+				res.redirect('/users/addProject');
+			}
+		});		
+	}
+	else {   //Display errors to user
+		var error_msg = '';
+		errors.forEach(function(error) {
+			error_msg += error.msg + '<br>';
+		});
+		req.flash('error', error_msg);	
+		
+		/**
+		 * Using req.body.name 
+		 * because req.param('name') is deprecated
+		 */ 
+		res.render('requests/addOpportunity', {
+			title: 'Post New Project',
+			name:  '',
+			manager:  '',
+			sector: '',
+			postedBy: '',
+			details: '',
+			status: 'pending'					
+		});
+    }
+});
+
+
+
+
+
 
 // SHOW EDIT USER FORM
 app.get('/edit/(:id)', function(req, res, next){
@@ -597,16 +667,16 @@ app.get('/approve/(:id)', function(req, res, next){
 		
 		// if user not found
 		if (!result) {
-			req.flash('error', 'Center not found with id = ' + req.params.id);
-			res.redirect('/users/doctorview');
+			req.flash('error', 'Opportunity not found with id = ' + req.params.id);
+			res.redirect('/users/opportunities');
 		}
 		else { // if user found
 			// render to views/user/edit.ejs template file
-			res.render('appointment/approve', {
-				title: 'Approve Appointment', 
+			res.render('requests/approve', {
+				title: 'Approve this Opportunity', 
 				//data: rows[0],
 				id: result[0]._id,
-				name: result[0].fname + " " + result[0].lname,
+				name: result[0].name,
 				status: 'Approved'
 				
 
@@ -615,7 +685,6 @@ app.get('/approve/(:id)', function(req, res, next){
 		}
 	});
 });
-
 
 
 
@@ -644,19 +713,90 @@ app.patch('/approve/(:id)', function(req, res, next) {
 		
 		// if user not found
 		if (!result) {
-			req.flash('error', 'Appointment not found with id = ' + req.params.id);
-			res.redirect('/users/doctorview');
+			req.flash('error', 'Opportunity not found with id = ' + req.params.id);
+			res.redirect('/users/opportunities');
 		}
 		else { // if user found
 			// render to views/user/edit.ejs template file
 			
 
-			req.flash('success', 'Appointment Approved');
-			res.redirect('/users/doctorview');
+			req.flash('success', 'Opportunity Approved');
+			res.redirect('/users/opportunities');
 		}
 	});
 }
 });
+
+
+
+///Get The Approve Page
+app.get('/approveProject/(:id)', function(req, res, next){
+	var o_id = new ObjectId(req.params.id);
+	dbcol2.find({"_id": o_id}).toArray(function(err, result) {
+		if(err) {
+			return console.log(err);
+		}
+		
+		// if user not found
+		if (!result) {
+			req.flash('error', 'Opportunity not found with id = ' + req.params.id);
+			res.redirect('/users/project');
+		}
+		else { // if user found
+			// render to views/user/edit.ejs template file
+			res.render('requests/approveProject', {
+				title: 'Approve this project', 
+				//data: rows[0],
+				id: result[0]._id,
+				name: result[0].name,
+				status: 'Approved'
+				
+
+
+			});
+		}
+	});
+});
+
+///Approve Status
+app.patch('/approveProject/(:id)', function(req, res, next) {	
+	var o_id = new ObjectId(req.params.id);
+	req.assert('name', ' Name is required').notEmpty();           //Validate name
+	req.assert('status', 'Approve is required').notEmpty();
+
+	
+
+	var errors = req.validationErrors();
+	if(!errors) {
+   var user = {
+	//name: req.sanitize('name').escape().trim(),
+	status: req.sanitize('status').escape().trim(),
+
+   }
+	
+	
+	dbcol2.updateOne(
+		{ _id: o_id  }, { $set: { status: user.status } }, (err, result)=> {
+		if(err) {
+			return console.log(err);
+		}
+		
+		// if user not found
+		if (!result) {
+			req.flash('error', 'Project not found with id = ' + req.params.id);
+			res.redirect('/users/projects');
+		}
+		else { // if user found
+			// render to views/user/edit.ejs template file
+			
+
+			req.flash('success', 'Project Approved');
+			res.redirect('/users/projects');
+		}
+	});
+}
+});
+
 
 
 
@@ -672,7 +812,7 @@ app.delete('/sendEmail/(:id)', function(req, res, next) {
 		// if user not found
 		if (!result) {
 			req.flash('error', 'Apppointment not found with id = ' + req.params.id);
-			res.redirect('/users/doctorView');
+			res.redirect('/users/projects');
 		}
 		else { // if user found
 			// render to views/user/edit.ejs template file

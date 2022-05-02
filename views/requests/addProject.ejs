@@ -26,28 +26,28 @@ including header content which is common for all pages
 
 					<div class="card add-student-card transparent-white">
 					<div class="card-header">
-						<div class="card-title h5 text-brown">Post New Opportunity</div>
+						<div class="card-title h5 text-brown">Post New Project</div>
 						<div class="card-subtitle text-light">Fill in form</div>
 					</div>
 					<div class="divider"></div>
 					<div class="card-body">
-					<form class="form-horizontal"  action="/users/add" method="post">
+					<form class="form-horizontal"  action="/users/addProject" method="post">
 						<!--  Name -->
 						<div class="form-group">
 							<div class="col-3 col-sm-12">
-							<label class="form-label" for="name">Name</label>
+							<label class="form-label" for="name">Title</label>
 							</div>
 							<div class="col-9 col-sm-12">
-							<input class="form-input" name="name" id="name" value="<%= name %>" placeholder="Name">
+							<input class="form-input" name="name" id="name" value="<%= name %>" placeholder="Title">
 							</div>
 						</div>
 						<!-- Last Name -->
 						<div class="form-group">
 							<div class="col-3 col-sm-12">
-								<label class="form-label" for="type">Type</label>
+								<label class="form-label" for="manager">Project Manager</label>
 							</div>
 							<div class="col-9 col-sm-12">
-								<input class="form-input"  name="type" id="type" value="<%= type %>" placeholder="e.g Scholarship">
+								<input class="form-input"  name="manager" id="manager" value="<%= manager %>" placeholder="e.g RDB">
 							</div>
 							</div>
 
@@ -79,7 +79,7 @@ including header content which is common for all pages
 									<label for="details" class="form-label">More Details</label>
 								</div>
 								<div class="col-9 col-sm-12">
-									<input type="text" name="details" value="<%= details %>" class="form-input" placeholder="http://example.oppo.com">
+									<input  type="text" name="details" value="<%= details %>" class="form-input" placeholder="http://example.oppo.com">
 								</div>
 							</div>
 						<!-- gender -->
