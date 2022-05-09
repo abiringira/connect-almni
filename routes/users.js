@@ -4,6 +4,8 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var nodemailer = require("nodemailer");
+var pdf = require('pdf-creator-node');
+var fs = require('fs');
 var urlencodedParser = bodyParser.urlencoded({extended:false});
 var ObjectId = require('mongodb').ObjectId;
 
@@ -1110,30 +1112,41 @@ app.get('/logout',function(req,res) {
 
 })
 
-app.get("/generateReport", (req, res) => {
-    ejs.renderFile(path.join(__dirname, './views/requests/', "report-      project.ejs"), {students: students}, (err, data) => {
-    if (err) {
-          res.send(err);
-    } else {
-        let options = {
-            "height": "11.25in",
-            "width": "8.5in",
-            "header": {
-                "height": "20mm"
-            },
-            "footer": {
-                "height": "20mm",
-            },
-        };
-        pdf.create(data, options).toFile("report.pdf", function (err, data) {
-            if (err) {
-                res.send(err);
-            } else {
-                res.send("File created successfully");
-            }
-        });
-    }
-})
+// req.flash('success', 'File Created Successfully');
+// 			res.redirect('/users/projects');
+
+app.get("/generateReport", async (req, res)  =>  {
+  
+	const template = fs.readFileSync("./views/template.html","utf-8")
+
+
+	const options = {
+		format : "A2",
+		orientation: "portrait",
+		border: "50mm",
+	}
+
+
+	const products = await dbcol2.find().sort({"_id": -1}).toArray();
+
+	const document = {
+		html : template,
+		data: {
+			products,
+		},
+		path: "./pdfs/report.pdf",
+	}
+
+	pdf.create(document,options)
+	.then((result)=> {
+   req.flash('success', 'Pdf File Created Successfully');
+   res.redirect('/users/projects');
+
+	}).catch((err) => {
+		req.flash('error', 'Failed to download pdf file with' + err);
+   res.redirect('/users/projects');
+
+	})
 }
 )
 

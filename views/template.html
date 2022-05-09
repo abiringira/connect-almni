@@ -1,0 +1,63 @@
+<!--
+including header content which is common for all pages
+-->
+
+<html>
+
+<head>
+  <title>Connect Almni</title>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+    <link rel="stylesheet" type="text/css" href="/static/stylesheets/spectre.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/stylesheets/spectre-icons.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/stylesheets/style.css" />
+</head>
+
+<body>
+ 
+	
+
+<div class="content-wrapper--outer padded">
+
+	<div class="content-wrapper--inner centerize padded-tb">
+	<div class="heading text-center">
+		<h3>Latest Projects</h3>
+	</div>
+	<div class="divider"></div>
+	<table class="table table-striped table-hover">
+			<thead>
+			  <tr>
+				<th>Title</th>
+				<th>Project Manager</th>
+				<th>Sector</th>
+				<th>Posted By</th>
+				<th>More Details</th>
+			  </tr>
+			</thead>
+			<tbody>
+                {{#each products}}
+				<tr>
+                   
+					<td class="text-capitalize"> {{this.name}} </td>
+					<td class="text-capitalize"> {{this.manager}}</td>
+					<td class="text-capitalize"> {{this.sector}} </td>
+					<td> {{this.postedBy}} </td>
+					<td>  {{this.details}}  </td>
+                   
+				</tr>
+                {{/each}}
+			</tbody>
+		  </table>
+		  </div>
+		   
+</div>
+
+
+<!--
+including footer content which is common for all pages
+-->
+
+
+</div>
+
+  </body>
+</html>	
