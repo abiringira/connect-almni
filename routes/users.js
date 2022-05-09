@@ -451,7 +451,7 @@ app.post('/add', function(req, res, next){
 			type: req.sanitize('type').escape().trim(),
 			sector: req.sanitize('sector').escape().trim(),
 			postedBy: req.sanitize('postedBy').escape().trim(),
-			details: req.sanitize('details').escape().trim(),
+			details: req.body.details,
 			status:'Pending',
 			Date : 'Not Confirmed',
 			Time :'Not Confirmed',
@@ -470,7 +470,7 @@ app.post('/add', function(req, res, next){
 					type: user.type,
 					sector: user.sector,
 					postedBy: user.postedBy,
-					details: user.details.JavascriptString.toString("utf8"),
+					details: user.details,
 					status: 'pending'					
 				});
 			} else {				
@@ -539,14 +539,16 @@ app.post('/addProject', function(req, res, next){
 	 
 	
     var errors = req.validationErrors();
-    if( !errors ) {   //No errors were found.  Passed Validation!
+    if( !errors ) {   
+		
+		// console.log( req.sanitize('details'));//No errors were found.  Passed Validation!
 		
 		var project = {
 			name: req.sanitize('name').escape().trim(),
 			manager: req.sanitize('manager').escape().trim(),
 			sector: req.sanitize('sector').escape().trim(),
 			postedBy: req.sanitize('postedBy').escape().trim(),
-			details: req.sanitize('details').escape().trim(),
+			details: req.body.details,
 			status:'Pending',
 			Date : 'Not Confirmed',
 			Time :'Not Confirmed',
@@ -565,7 +567,7 @@ app.post('/addProject', function(req, res, next){
 					manager: project.manager,
 					sector: project.sector,
 					postedBy: project.postedBy,
-					details: project.details.JavascriptString.toString("utf8"),
+					details: project.details,
 					status: 'pending'					
 				});
 			} else {				
