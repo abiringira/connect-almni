@@ -23,28 +23,28 @@ including header content which is common for all pages
   
 	<div class="card edit-student-card transparent-white">
 			<div class="card-header">
-				<div class="card-title h5 text-brown">Edit Project</div>
+				<div class="card-title h5 text-brown">Edit Opportunity</div>
 				<div class="card-subtitle text-light">Fill in form</div>
 			</div>
 			<div class="divider"></div>
 			<div class="card-body">
-			<form class="form-horizontal" action="/users/edit/<%= id %>" method="post" name="form1">
+			<form class="form-horizontal" action="/users/editOpportunity/<%= id %>" method="post" name="form1">
 				
 				<div class="form-group">
 					<div class="col-3 col-sm-12">
-					<label class="form-label" for="name">Title</label>
+					<label class="form-label" for="name">Name</label>
 					</div>
 					<div class="col-9 col-sm-12">
-					<input class="form-input" name="name" id="name" value="<%= name %>" placeholder="Title">
+					<input class="form-input" name="name" id="name" value="<%= name %>" placeholder="Name">
 					</div>
 				</div>
 				<!-- Last Name -->
 				<div class="form-group">
 					<div class="col-3 col-sm-12">
-						<label class="form-label" for="manager">Project Manager</label>
+						<label class="form-label" for="type">Type</label>
 					</div>
 					<div class="col-9 col-sm-12">
-						<input class="form-input"  name="manager" id="manager" value="<%= manager %>" placeholder="e.g RDB">
+						<input class="form-input"  name="type" id="type" value="<%= type %>" placeholder="e.g Scholarship">
 					</div>
 					</div>
 
@@ -76,7 +76,7 @@ including header content which is common for all pages
 							<label for="details" class="form-label">More Details</label>
 						</div>
 						<div class="col-9 col-sm-12">
-							<input  type="text" name="details" value="<%= details %>" class="form-input" placeholder="http://example.oppo.com">
+							<input type="text" name="details" value="<%= details %>" class="form-input" placeholder="http://example.oppo.com">
 						</div>
 					</div>
 				

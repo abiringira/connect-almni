@@ -66,6 +66,30 @@ app.get('/opportunities', function(req, res, next) {
 });
 
 
+app.get('/opportunities/almni', function(req, res, next) {	
+	// fetch and sort users collection by id in descending order
+
+	dbcol.find({'status': 'Approved'}).sort({"_id": -1}).toArray (function(err, result) {
+		//if (err) return console.log(err)
+		console.log(result.toString());
+		if (err) {
+			req.flash('error', err);
+			res.render('requests/opportunitiesAlmniView', {
+				title: 'Recent Opportunities', 
+				data: ''
+			});
+		} else {
+		
+			// render to views/user/list.ejs template file
+			res.render('requests/opportunitiesAlmniView', {
+				title: 'Recent Opportunities', 
+				data: result
+			});
+		}
+	});
+});
+
+
 app.get('/projects', function(req, res, next) {	
 	// fetch and sort users collection by id in descending order
 	dbcol2.find().sort({"_id": -1}).toArray (function(err, result) {
@@ -86,6 +110,41 @@ app.get('/projects', function(req, res, next) {
 		}
 	});
 });
+
+
+
+app.get('/projects/almni', function(req, res, next) {	
+	// fetch and sort users collection by id in descending order
+	dbcol2.find({'status': 'Approved'}).sort({"_id": -1}).toArray (function(err, result) {
+		//if (err) return console.log(err)
+		if (err) {
+			req.flash('error', err);
+			res.render('requests/projectsAlmniView', {
+				title: 'Latest Projects', 
+				data: ''
+			});
+		} else {
+		
+			// render to views/user/list.ejs template file
+			res.render('requests/projectsAlmniView', {
+				title: 'Latest Projects', 
+				data: result
+			});
+		}
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -304,7 +363,7 @@ app.post('/login',urlencodedParser,function(req,res){
 				   if(userData.username === 'admin@log.com') {
 					res.redirect('/users/admin')
 				   } else {
-					res.redirect('/users/projects')  
+					res.redirect('/users/projects/almni')  
 				   }
 				
 			
@@ -554,38 +613,79 @@ app.get('/edit/(:id)', function(req, res, next){
 		
 		// if user not found
 		if (!result) {
-			req.flash('error', 'Center not found with id = ' + req.params.id);
-			res.redirect('/users/viewCenter');
+			req.flash('error', 'Project not found with id = ' + req.params.id);
+			res.redirect('/users/projects');
 		}
 		else { // if user found
 			// render to views/user/edit.ejs template file
-			res.render('appointment/edit', {
-				title: 'Edit User', 
+			res.render('requests/edit', {
+				title: 'Edit Project', 
 				//data: rows[0],
 				id: result[0]._id,
 				name: result[0].name,
-				district: result[0].district
-				
-
-
+				manager: result[0].manager,
+				sector: result[0].sector,
+				postedBy: result[0].postedBy,
+				details: result[0].details
+			
 			});
 		}
 	});
 });
 
+
+
+// SHOW EDIT USER FORM
+app.get('/editOpportunity/(:id)', function(req, res, next){
+	var o_id = new ObjectId(req.params.id);
+	dbcol.find({"_id": o_id}).toArray(function(err, result) {
+		if(err) {
+			return console.log(err);
+		}
+		
+		// if user not found
+		if (!result) {
+			req.flash('error', 'Opportunity not found with id = ' + req.params.id);
+			res.redirect('/users/opportunities');
+		}
+		else { // if user found
+			// render to views/user/edit.ejs template file
+			res.render('requests/editOpportunity', {
+				title: 'Edit Opportunity', 
+				//data: rows[0],
+				id: result[0]._id,
+				name: result[0].name,
+				type: result[0].type,
+				sector: result[0].sector,
+				postedBy: result[0].postedBy,
+				details: result[0].details
+			
+			});
+		}
+	});
+});
+
+
+
 // EDIT USER POST ACTION
 app.put('/edit/(:id)', function(req, res, next) {
-	req.assert('name', ' Name is required').notEmpty();           //Validate name
-	req.assert('district', 'Location is required').notEmpty();
-
+	req.assert('name', 'Title is required').notEmpty();          //Validate name
+	req.assert('manager', 'Project Manager is required').notEmpty();
+	req.assert('sector', 'Sector is required').notEmpty();
+	req.assert('postedBy', 'Email is required').isEmail();		//Validate age
+	req.assert('details', 'Details required').notEmpty(); 
 	
 
     var errors = req.validationErrors();
     
     if( !errors ) {   //No errors were found.  Passed Validation!
 		var user = {
-				name: req.sanitize('name').escape().trim(),
-				district: req.sanitize('district').escape().trim(),
+				
+			name: req.sanitize('name').escape().trim(),
+			manager: req.sanitize('manager').escape().trim(),
+			sector: req.sanitize('sector').escape().trim(),
+			postedBy: req.sanitize('postedBy').escape().trim(),
+			details: req.sanitize('details').escape().trim(),
 				
 		};
 		
@@ -595,17 +695,21 @@ app.put('/edit/(:id)', function(req, res, next) {
 				req.flash('error', err);
 				
 				// render to views/user/edit.ejs
-				res.render('appointment/edit', {
-					title: 'Edit Center',
+				res.render('requests/edit', {
+					title: 'Edit Project',
 					id: req.params.id,
 					name: req.body.name,
-					district: req.body.district
+					manager: req.body.manager,
+					sector: req.params.sector,
+					postedBy: req.body.postedBy,
+					details: req.body.details
+
 							
 				});
 			} else {
 				req.flash('success', 'Data updated successfully!');
 				
-				res.redirect('/users/viewCenter');
+				res.redirect('/users/projects');
 			}
 		});	
 	}
@@ -620,15 +724,91 @@ app.put('/edit/(:id)', function(req, res, next) {
 		 * Using req.body.name 
 		 * because req.param('name') is deprecated
 		 */ 
-        res.render('appointment/edit', { 
-            title: 'Edit Center',            
-			id: req.params.id, 
-			name: req.body.fname,
-			district: req.body.district
+        res.render('requests/edit', { 
+            title: 'Edit Project',            
+			id: req.params.id,
+			name: req.body.name,
+			manager: req.body.manager,
+			sector: req.params.sector,
+			postedBy: req.body.postedBy,
+			details: req.body.details
 					
         });
     }
 });
+
+
+
+app.put('/editOpportunity/(:id)', function(req, res, next) {
+	req.assert('name', 'Title is required').notEmpty();          //Validate name
+	req.assert('type', 'Type is required').notEmpty();
+	req.assert('sector', 'Sector is required').notEmpty();
+	req.assert('postedBy', 'Email is required').isEmail();		//Validate age
+	req.assert('details', 'Details required').notEmpty(); 
+	
+
+    var errors = req.validationErrors();
+    
+    if( !errors ) {   //No errors were found.  Passed Validation!
+		var user = {
+				
+			name: req.sanitize('name').escape().trim(),
+			type: req.sanitize('type').escape().trim(),
+			sector: req.sanitize('sector').escape().trim(),
+			postedBy: req.sanitize('postedBy').escape().trim(),
+			details: req.sanitize('details').escape().trim(),
+				
+		};
+		
+		var o_id = new ObjectId(req.params.id);
+		dbcol.update({"_id": o_id}, user, function(err, result) {
+			if (err) {
+				req.flash('error', err);
+				
+				// render to views/user/edit.ejs
+				res.render('requests/editOpportunity', {
+					title: 'Edit Opportunity',
+					id: req.params.id,
+					name: req.body.name,
+					type: req.body.type,
+					sector: req.params.sector,
+					postedBy: req.body.postedBy,
+					details: req.body.details
+
+							
+				});
+			} else {
+				req.flash('success', 'Data updated successfully!');
+				
+				res.redirect('/users/opportunities');
+			}
+		});	
+	}
+	else {   //Display errors to user
+		var error_msg = '';
+		errors.forEach(function(error) {
+			error_msg += error.msg + '<br>';
+		});
+		req.flash('error', error_msg);
+		
+		/**
+		 * Using req.body.name 
+		 * because req.param('name') is deprecated
+		 */ 
+        res.render('requests/editOpportunity', { 
+            title: 'Edit Opportunity',            
+			id: req.params.id,
+			name: req.body.name,
+			type: req.body.type,
+			sector: req.params.sector,
+			postedBy: req.body.postedBy,
+			details: req.body.details
+					
+        });
+    }
+});
+
+
 
 
 app.delete('/send/(:id)', function(req, res, next) {	
@@ -640,20 +820,43 @@ app.delete('/send/(:id)', function(req, res, next) {
 		
 		// if user not found
 		else if (!result) {
-			req.flash('error', 'Center not found with id = ' + req.params.id);
-			res.redirect('/users/viewCenter');
+			req.flash('error', 'Project not found with id = ' + req.params.id);
+			res.redirect('/users/projects');
 		}
 		else { // if user found
 			// render to views/user/edit.ejs template file
 			
 
-			req.flash('success', 'Center Deleted');
-			res.redirect('/users/viewCenter');
+			req.flash('success', 'Project has been Deleted');
+			res.redirect('/users/projects');
 		}
 	});
 	
 });
 
+
+app.delete('/sendOpportunity/(:id)', function(req, res, next) {	
+	var o_id = req.params.id;
+	dbcol.remove({"_id": ObjectId(o_id)},(err, result) => {
+		if(err) {
+			return console.log(err);
+		}
+		
+		// if user not found
+		else if (!result) {
+			req.flash('error', 'Opportunity not found with id = ' + req.params.id);
+			res.redirect('/users/opportunities');
+		}
+		else { // if user found
+			// render to views/user/edit.ejs template file
+			
+
+			req.flash('success', 'Opportunity has been Deleted');
+			res.redirect('/users/opportunities');
+		}
+	});
+	
+});
 
 
 

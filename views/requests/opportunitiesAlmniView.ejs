@@ -1,7 +1,7 @@
 <!--
 including header content which is common for all pages
 -->
-<%- include ../layouts/header.ejs %>
+<%- include ../layouts/headerAlmni.ejs %>
 
 <% if (messages.error) { %>
 	<div id="toast" class="toast toast-error">
@@ -61,9 +61,8 @@ including header content which is common for all pages
 				<th>Sector</th>
 				<th>Posted By</th>
 				<th>More Details</th>
-				<th>Status</th>
-				<th>Approve</th>
-				<th>Edit/Drop</th>
+				
+			
 			  </tr>
 			</thead>
 			<tbody>
@@ -75,39 +74,9 @@ including header content which is common for all pages
 					<td class="text-capitalize"><%= user.sector %></td>
 					<td><%= user.postedBy %></td>
 					<td> <a href="<%= user.details %>"> <%= user.details %>  </a></td>
-					<td class="text-capitalize"><%= user.status %></td>
-				
-					<td>
-						
-						<form method="post" action="/users/approve/<%= user._id %>">
-							<div class="parent-div">
-							<a class="btn btn-action btn-error" onClick="return confirm('Are you sure you want to aprrove this appointment?')" href='/users/approve/<%= user._id %>' ><i class="icon icon-edit"></i></a> 
-							<!--<button type="submit" name="delete" class="btn btn-action btn-error" onClick="return confirm('Are you sure you want to aprrove this appointment?')"><i class="icon icon-delete"></i></button> -->
-							<input type="hidden" name="_method" value="PUT" />
-						</div>
-						</form>
-					</td>
-
-					<td>
-						
 					
-						<form method="post" action="/users/sendOpportunity/<%= user._id %>" >
-							<div class="wrapper">
-							<div class="c1">
-							<a class="btn btn-action btn-primary" href='/users/editOpportunity/<%= user._id %>' ><i class="icon icon-edit"></i></a>
-						</div>
-
-						&nbsp;&nbsp;
-						<div class="c2">
-  
-							<button type="submit" name="delete" class="btn btn-action btn-error" onClick="return confirm('Are you sure you want to delete?')"><i class="icon icon-delete"></i></button>
-							<input type="hidden" name="_method" value="DELETE" />
-						</div>
-
-						</div>
-						</form>
 					
-					</td>
+					
 				</tr>
 				<% }) %>
 				<% } %>
@@ -121,4 +90,4 @@ including header content which is common for all pages
 <!--
 including footer content which is common for all pages
 -->
-<%- include ../layouts/footer.ejs %>
+<%- include ../layouts/footerAlmni.ejs %>

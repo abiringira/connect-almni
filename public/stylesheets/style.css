@@ -73,3 +73,21 @@ label{
     display: none;
     transition: 0.5s ease-in-out;
 }
+
+
+.wrapper{
+    display:flex;
+    justify-content:space-between;
+    
+  }
+  
+  
+  .c1{
+    float:left;
+  }
+  
+  
+  .c2{
+    float:right;
+  }
+  .parent-div { text-align: center ;}
