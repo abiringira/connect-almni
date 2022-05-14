@@ -20,7 +20,9 @@ var ObjectId = require('mongodb').ObjectId;
 		console.log('mongodb connected');
 		dbcol = db.collection('opportunities'); 
 		dbcol1 = db.collection('users');
-		dbcol2 = db.collection('projects')
+		dbcol2 = db.collection('projects');
+		dbcol3 = db.collection('information');
+
 		 // Reuse dbcol for DB CRUD operations
 		
 
@@ -61,6 +63,32 @@ app.get('/opportunities', function(req, res, next) {
 			// render to views/user/list.ejs template file
 			res.render('requests/opportunities', {
 				title: 'Recent Opportunities', 
+				data: result
+			});
+		}
+	});
+});
+
+
+
+
+app.get('/informations', function(req, res, next) {	
+	// fetch and sort users collection by id in descending order
+
+	dbcol3.find().sort({"_id": -1}).toArray (function(err, result) {
+		//if (err) return console.log(err)
+	
+		if (err) {
+			req.flash('error', err);
+			res.render('requests/opportunities', {
+				title: 'Recent Opportunities', 
+				data: ''
+			});
+		} else {
+		
+			// render to views/user/list.ejs template file
+			res.render('requests/informations', {
+				title: 'User Informations', 
 				data: result
 			});
 		}
@@ -506,8 +534,6 @@ app.post('/add', function(req, res, next){
 });
 
 
-
-
 // SHOW ADD PROJECT FORM
 app.get('/addProject', function(req, res, next){	
 	// render to views/user/add.ejs
@@ -585,7 +611,7 @@ app.post('/addProject', function(req, res, next){
 			error_msg += error.msg + '<br>';
 		});
 		req.flash('error', error_msg);	
-		
+
 		/**
 		 * Using req.body.name 
 		 * because req.param('name') is deprecated
@@ -602,6 +628,103 @@ app.post('/addProject', function(req, res, next){
     }
 });
 
+
+// SHOW ADD PROJECT FORM
+app.get('/addInfo', function(req, res, next){	
+	// render to views/user/add.ejs
+	dbcol3.find().sort({"_id": -1}).toArray (function(err, centerresult) {
+		//console.log(centerresult.toString());
+		res.render('requests/addInformation', {
+			title: 'Add New Info',
+			fullName: '',
+			job: '',
+			institution: '',
+			phoneNumber: '',
+			faculty: '',
+			message: '',
+
+								
+		});
+	//res.json({Result : centerresult});
+	
+   });
+   
+});
+
+
+
+// ADD NEW PROJECT POST ACTION
+app.post('/addInfo', function(req, res, next){	
+	req.assert('fullName', 'Full Name is required').notEmpty();          //Validate name
+	req.assert('job', 'Job is required').notEmpty();
+	req.assert('institution', 'Institution is required').notEmpty();
+	req.assert('phoneNumber', 'PhoneNumber is required').notEmpty();
+	req.assert('faculty', 'Faculty is required').notEmpty();		//Validate age
+	req.assert('message', 'Message is required').notEmpty();  //Validate email
+	
+	 
+	
+    var errors = req.validationErrors();
+    if( !errors ) {   
+		
+		// console.log( req.sanitize('details'));//No errors were found.  Passed Validation!
+		
+		var project = {
+			fullName: req.sanitize('fullName').escape().trim(),
+			job: req.sanitize('job').escape().trim(),
+			institution: req.sanitize('institution').escape().trim(),
+			phoneNumber: req.sanitize('phoneNumber').escape().trim(),
+			faculty: req.sanitize('faculty').escape().trim(),
+			message: req.sanitize('message').escape().trim(),
+			
+		
+
+		};
+				 
+		dbcol3.insert(project, function(err, result) {
+			if (err) {
+				req.flash('error', err);
+				
+				// render to views/user/add.ejs
+				res.render('requests/addInformation', {
+					title: 'Add New Information',
+					fullName: project.fullName,
+					job: project.job,
+					faculty: project.faculty,
+					institution: project.institution,
+					phoneNumber: project.phoneNumber,
+					message: project.message,
+									
+				});
+			} else {				
+				req.flash('success', 'Information added successfully!');
+				// redirect to user list page				
+				res.redirect('/users/addInfo');
+			}
+		});		
+	}
+	else {   //Display errors to user
+		var error_msg = '';
+		errors.forEach(function(error) {
+			error_msg += error.msg + '<br>';
+		});
+		req.flash('error', error_msg);	
+		
+		/**
+		 * Using req.body.name 
+		 * because req.param('name') is deprecated
+		 */ 
+		res.render('requests/addInformation', {
+			title: 'Add New Information',
+			fullName: '',
+			job: '',
+			institution: '',
+			faculty: '',
+			phoneNumber: '',
+			message: '',					
+		});
+    }
+});
 
 
 
