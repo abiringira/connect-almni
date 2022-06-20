@@ -1273,7 +1273,44 @@ app.get("/generateReport", async (req, res)  =>  {
 }
 )
 
+app.get("/generateStudentReport", async (req, res)  =>  {
+  
+	const template = fs.readFileSync("./views/template2.html","utf-8")
 
+
+
+	const options = {
+		format : "A2",
+		orientation: "portrait",
+		border: "50mm",
+		}
+
+
+	const products = await dbcol1.find().sort({"graduationYear": -1}).toArray();
+
+	const document = {
+		html : template,
+		data: {
+			//  logo,
+             products,
+			 
+
+		},
+		path: "./pdfs/studentReport.pdf",
+	}
+
+	pdf.create(document,options)
+	.then((result)=> {
+   req.flash('success', 'Pdf File Created Successfully');
+   res.redirect('/users/projects');
+
+	}).catch((err) => {
+		req.flash('error', 'Failed to download pdf file with' + err);
+   res.redirect('/users/projects');
+
+	})
+}
+)
 
 
 module.exports = app;
