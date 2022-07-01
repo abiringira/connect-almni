@@ -63,19 +63,46 @@ including header content which is common for all pages
 				<th>Faculty</th>
 				<th>User Details</th>
 				
+				
 			  </tr>
 			</thead>
 			<tbody>
 			<% if (data) { %>
 			<% data.forEach(function(user){ %>
 				<tr>
-					<td class="text-capitalize"><%= user.fullName %></td>
+					<td class="text-capitalize"><%= user.fullname %></td>
 					<td class="text-capitalize"><%= user.job %></td>
 					<td class="text-capitalize"><%= user.institution %></td>
 					<td><%= user.phoneNumber %></td>
 					<td class="text-capitalize"> <%= user.faculty %>  </a></td>
 					<td><%= user.message %></td>
 				
+		<td>
+
+
+			<!-- <form method="post" action="/users/sendInfo/<%= user._id %>">
+				<div class="wrapper">
+				<div class="c1">
+				<a class="btn btn-action btn-primary" href='/users/editInformation/<%= user._id %>'><i
+						class="icon icon-edit"></i></a>
+				</div>
+
+			&nbsp;&nbsp;
+			 <div class="c2">
+
+				<button type="submit" name="delete" class="btn btn-action btn-error"
+					onClick="return confirm('Are you sure you want to delete?')"><i
+						class="icon icon-delete"></i></button>
+				<input type="hidden" name="_method" value="DELETE" />
+			</div> 
+
+		</div>
+	</form> -->
+
+</td>
+
+
+
 				</tr>
 				<% }) %>
 				<% } %>

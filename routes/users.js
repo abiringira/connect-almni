@@ -35,12 +35,19 @@ var ObjectId = require('mongodb').ObjectId;
 
 
 	var smtpTransport = nodemailer.createTransport({
-		service: "gmail",
-		secure: false,
-		auth: {
-			user: "niyimukundacheline@gmail.com",
-			pass: "cheline1994"
-		},
+		
+		 host: "smtp.gmail.com",
+		port: 465,
+		secure: true,
+  auth: {
+		 type: "OAuth2",
+    user: "user@example.com",
+    clientId: "000000000000-xxx0.apps.googleusercontent.com",
+    clientSecret: "XxxxxXXxX0xxxxxxxx0XXxX0",
+    refreshToken: "1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx",
+    accessToken: "ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x",
+    expires: 1484314697598,
+    },
 		debug: true
 	  });
 
@@ -217,7 +224,7 @@ app.post('/center', function(req, res, next){
 	req.assert('name', ' Name is required').notEmpty();          //Validate name
 	req.assert('district', 'District is required').notEmpty();
 	
-	var errors = req.validationErrors();
+	var errors = req.getValidationResult();
     if( !errors ) {   //No errors were found.  Passed Validation!
 		
 		var user = {
@@ -295,7 +302,7 @@ app.post('/signup', function(req, res, next){
 	req.assert('password', 'password name is required').notEmpty(); 
 	req.assert('graduationYear', 'graduation year is required').notEmpty(); 
 	 
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
     if( !errors ) {   //No errors were found.  Passed Validation!
 		
 		var user = {
@@ -473,7 +480,7 @@ app.post('/add', function(req, res, next){
 	
 	 
 	
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
     if( !errors ) {   //No errors were found.  Passed Validation!
 		
 		var user = {
@@ -566,7 +573,7 @@ app.post('/addProject', function(req, res, next){
 	
 	 
 	
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
     if( !errors ) {   
 		
 		// console.log( req.sanitize('details'));//No errors were found.  Passed Validation!
@@ -664,7 +671,7 @@ app.post('/addInfo', function(req, res, next){
 	
 	 
 	
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
     if( !errors ) {   
 		
 		// console.log( req.sanitize('details'));//No errors were found.  Passed Validation!
@@ -793,6 +800,134 @@ app.get('/editOpportunity/(:id)', function(req, res, next){
 });
 
 
+app.get('/editInformation/(:id)', function(req, res, next){
+	var o_id = new ObjectId(req.params.id);
+	dbcol3.find({"_id": o_id}).toArray(function(err, result) {
+		if(err) {
+			return console.log(err);
+		}
+		
+		// if user not found
+		if (!result) {
+			req.flash('error', 'Information not found not found with id = ' + req.params.id);
+			res.redirect('/users/informations');
+		}
+		else { // if user found
+			// render to views/user/editInformation.ejs template file
+			res.render('requests/editInformation', {
+				title: 'Edit Information', 
+				//data: rows[0],
+				id: result[0]._id,
+				fullName: result[0].fullName,
+				job: result[0].job,
+				institution: result[0].institution,
+				phoneNumber: result[0].phoneNumber,
+				faculty: result[0].faculty,
+				// message: result[0].message
+			
+			});
+		}
+	});
+});
+
+
+// EDIT USER POST ACTION
+app.put('/editInformation/(:id)', function(req, res, next) {
+	req.assert('fullName', 'FullName is required').notEmpty();          //Validate name
+	req.assert('job', 'Job Manager is required').notEmpty();
+	req.assert('institution', 'Institution is required').notEmpty();
+	req.assert('phoneNumber', 'PhoneNumber is required').notEmpty();		//Validate age
+	req.assert('faculty', 'Faculty is required').notEmpty(); 
+	// req.assert('message', 'Message is required').notEmpty(); 
+
+    var errors = req.getValidationResult();
+    
+    if( !errors ) {   //No errors were found.  Passed Validation!
+		var user = {
+				
+			fullName: req.sanitize('fullName').escape().trim(),
+			job: req.sanitize('job').escape().trim(),
+			institution: req.sanitize('institution').escape().trim(),
+			phoneNumber: req.sanitize('phoneNumber').escape().trim(),
+			faculty: req.sanitize('faculty').escape().trim(),
+			// message: req.sanitize('message').escape().trim()
+				
+		};
+		
+		var o_id = new ObjectId(req.params.id);
+		dbcol3.update({"_id": o_id}, user, function(err, result) {
+			if (err) {
+				req.flash('error', err);
+				
+				// render to views/user/editInformation.ejs
+				res.render('requests/editInformation', {
+					title: 'Edit Information',
+					id: req.params.id,
+					fullName: req.body.fullName,
+					job: req.body.job,
+					institution: req.body.institution,
+					phoneNumber: req.params.phoneNumber,
+					faculty: req.body.faculty,
+					 message: req.body.message
+							
+				});
+			} else {
+				req.flash('success', 'Data updated successfully!');
+				
+				res.redirect('/users/informations');
+			}
+		});	
+	}
+	else {   //Display errors to user
+		var error_msg = '';
+		// errors.forEach(function(error) {
+		// 	error_msg += error.msg + '<br>';
+		// });
+		req.flash('error', error_msg);
+		
+		/**
+		 * Using req.body.name 
+		 * because req.param('name') is deprecated
+		 */ 
+        res.render('requests/editInformation', { 
+            title: 'Edit Information',            
+			id: req.params.id,
+			fullName: req.body.fullName,
+			job: req.body.job,
+			institution: req.body.institution,
+			phoneNumber: req.params.phoneNumber,
+			faculty: req.body.faculty,
+			// message: req.body.message
+
+					
+        });
+    }
+});
+
+
+app.delete('/sendInfo/(:id)', function(req, res, next) {	
+	var o_id = req.params.id;
+	dbcol3.remove({"_id": ObjectId(o_id)},(err, result) => {
+		if(err) {
+			return console.log(err);
+		}
+		
+		// if user not found
+		else if (!result) {
+			req.flash('error', 'Information not found with id = ' + req.params.id);
+			res.redirect('/users/informations');
+		}
+		else { // if user found
+			// render to views/user/edit.ejs template file
+			
+
+			req.flash('success', 'Information has been Deleted');
+			res.redirect('/users/informations');
+		}
+	});
+	
+});
+
 
 // EDIT USER POST ACTION
 app.put('/edit/(:id)', function(req, res, next) {
@@ -803,7 +938,7 @@ app.put('/edit/(:id)', function(req, res, next) {
 	req.assert('details', 'Details required').notEmpty(); 
 	
 
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
     
     if( !errors ) {   //No errors were found.  Passed Validation!
 		var user = {
@@ -874,7 +1009,7 @@ app.put('/editOpportunity/(:id)', function(req, res, next) {
 	req.assert('details', 'Details required').notEmpty(); 
 	
 
-    var errors = req.validationErrors();
+    var errors = req.getValidationResult();
     
     if( !errors ) {   //No errors were found.  Passed Validation!
 		var user = {
@@ -1026,7 +1161,7 @@ app.patch('/approve/(:id)', function(req, res, next) {
 
 	
 
-	var errors = req.validationErrors();
+	var errors = req.getValidationResult();
 	if(!errors) {
    var user = {
 	//name: req.sanitize('name').escape().trim(),
@@ -1096,7 +1231,7 @@ app.patch('/approveProject/(:id)', function(req, res, next) {
 
 	
 
-	var errors = req.validationErrors();
+	var errors = req.getValidationResult();
 	if(!errors) {
    var user = {
 	//name: req.sanitize('name').escape().trim(),

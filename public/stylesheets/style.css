@@ -29,7 +29,7 @@ label{
     justify-content: center;
 }
 .centerize{
-    max-width: 1080px;
+    max-width: 950px;
     margin: 0 auto;
 }
 .transparent-white{
@@ -91,3 +91,13 @@ label{
     float:right;
   }
   .parent-div { text-align: center ;}
+
+  #example_length label  {
+    color: black;
+    padding-bottom: 15px;
+  }
+  #example_filter label {
+color: black;
+padding-bottom: 15px;
+  }
+  

@@ -1,0 +1,117 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../layouts/header.ejs %>
+
+
+    <% if (messages.error) { %>
+        <div id="toast" class="toast toast-error">
+            <button id="btn-clear" class="btn btn-clear float-right"></button>
+            <%- messages.error %>
+        </div>
+        <% } %>
+
+            <% if (messages.success) { %>
+                <div id="toast" class="toast toast-success">
+                    <button id="btn-clear" class="btn btn-clear float-right"></button>
+                    <%- messages.success %>
+                </div>
+                <% } %>
+
+                    <div class="content-wrapper--outer edit-student-bg padded">
+
+                        <div class="card edit-student-card transparent-white">
+                            <div class="card-header">
+                                <div class="card-title h5 text-brown">Edit Information</div>
+                                <div class="card-subtitle text-light">Fill in form</div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="card-body">
+                                <form class="form-horizontal" action="/users/editInformation/<%= id %>" method="post"
+                                    name="form1">
+                                    <!--Full Name-->
+                                    <div class="form-group">
+                                        <div class="col-3 col-sm-12">
+                                            <label class="form-label" for="fullName">Fullname</label>
+                                        </div>
+                                        <div class="col-9 col-sm-12">
+                                            <input class="form-input" name="fullName" id="fullName"value="<%= fullName %>"
+                                                placeholder="FullName">
+                                        </div>
+                                    </div>
+                                    <!-- Job -->
+                                    <div class="form-group">
+                                        <div class="col-3 col-sm-12">
+                                            <label class="form-label" for="name">Job</label>
+                                        </div>
+                                        <div class="col-9 col-sm-12">
+                                            <input class="form-input" name="job" id="job" value="<%= job %>"
+                                                placeholder="Job">
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Institution -->
+                                    <div class="form-group">
+                                        <div class="col-3 col-sm-12">
+                                            <label class="form-label" for="name">Institution</label>
+                                        </div>
+                                        <div class="col-9 col-sm-12">
+                                            <input class="form-input" name="institution" id="institution" value="<%= institution %>"
+                                                placeholder="e.g RDB">
+                                        </div>
+                                    </div>
+
+                                    <!-- Phone Number -->
+                        <div class="form-group">
+                            <div class="col-3 col-sm-12">
+                                <label for="phone" class="form-label">Phone Number</label>
+                            </div>
+                            <div class="col-9 col-sm-12">
+                                <input type="tel" name="phoneNumber" value="<%= phoneNumber %>" class="form-input" placeholder="0788789009">
+                            </div>
+                        </div>
+
+
+                                    <!-- Faculty -->
+                                            <div class="form-group">
+                                                <div class="col-3 col-sm-12">
+                                                    <label class="form-label" for="faculty">Faculty Attended</label>
+                                                </div>
+                                                <div class="col-9 col-sm-12">
+                                                    <input class="form-input" name="faculty" id="faculty" value="<%= faculty %>" placeholder="e.g Education">
+                                                </div>
+                                            </div>
+
+                                        <!-- Details -->
+                    <div class="form-group">
+                        <div class="col-3 col-sm-12">
+                                <label for="message" class="form-label">Tell us more about you</label>
+                        </div>
+                        <div class="col-9 col-sm-12">
+                            <textarea class="contact textarea" rows="8" cols="50" id="message" name="message"></textarea>
+                        </div>
+                </div>
+                                    <!-- submit -->
+                        <div class="padded-tb">
+                            <button class="btn-block btn btn-primary bg-brown text-white" type="submit">Edit Information</button>
+                        
+                        <input type="hidden" name="_method" value="PUT" /></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    </div>
+                    </div>
+
+
+
+
+
+                    <!--
+including footer content which is common for all pages
+-->
+                    <%- include ../layouts/footer.ejs %>

@@ -1,11 +1,11 @@
 <html>
 
 <head>
-  <title>Connect Almni</title>
-    <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
-    <link rel="stylesheet" type="text/css" href="/static/stylesheets/spectre.min.css" />
-    <link rel="stylesheet" type="text/css" href="/static/stylesheets/spectre-icons.min.css" />
-    <link rel="stylesheet" type="text/css" href="/static/stylesheets/style.css" />
+  <title>Connect Alumni</title>
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="/static/stylesheets/spectre.min.css" />
+  <link rel="stylesheet" type="text/css" href="/static/stylesheets/spectre-icons.min.css" />
+  <link rel="stylesheet" type="text/css" href="/static/stylesheets/style.css" />
 </head>
 
 <body>
@@ -28,25 +28,43 @@
     </div>
    </div> -->
 
-   <div class="navbar-wrapper--outer shadow">
-     <div class="navbar-wrapper--inner padded centerize">
+  <div class="navbar-wrapper--outer shadow">
+    <div class="navbar-wrapper--inner padded centerize">
       <header class="navbar">
         <section class="navbar-section">
+
+
           <a href="/" class="navbar-brand">Connect Almni</a>
         </section>
         <section class="navbar-section">
-          <a href="/users/generateReport" class="btn btn-link">Download Report</a>
+          <div class="dropdown">
+            <a href="#" class="btn btn-success dropdown-toggle">
+              Download Report <i class="icon icon-caret"></i>
+            </a>
+            <ul class="menu">
+              <li class="highlight">
+                <a href="/users/generateReport" class="btn btn-link">
+                  Project Report
+                </a>
+              </li>
+              <li class="highlight">
+                <a href="/users/generateStudentReport" class="btn btn-link">
+                  Graduate Report
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- <a href="/users/generateReport" class="btn btn-link">Download Report</a> -->
           <a href="/users/admin" class="btn btn-link">Users</a>
           <a href="/users/projects" class="btn btn-link">Projects</a>
           <a href="/users/opportunities" class="btn btn-link">Opportunities</a>
           <a href="/users/informations" class="btn btn-link">Almuni Details</a>
           <a href="/users/logout" class="btn btn-link">Logout</a>
-          
-          
+
+
           <!-- <a href="/contact" class="btn btn-link">Contact Us</a> -->
         </section>
       </header>
-       
-     </div>
-   </div>
 
+    </div>
+  </div>
