@@ -8,6 +8,7 @@ var pdf = require('pdf-creator-node');
 var fs = require('fs');
 var urlencodedParser = bodyParser.urlencoded({extended:false});
 var ObjectId = require('mongodb').ObjectId;
+const sendgridTransport = require('nodemailer-sendgrid-transport');
 
 	const mongoClient = require('mongodb').MongoClient;
 	const mongoDbUrl = 'mongodb://localhost:27017/connect_alumni';
@@ -34,22 +35,14 @@ var ObjectId = require('mongodb').ObjectId;
 	});
 
 
-	var smtpTransport = nodemailer.createTransport({
-		
-		 host: "smtp.gmail.com",
-		port: 465,
-		secure: true,
-  auth: {
-		 type: "OAuth2",
-    user: "user@example.com",
-    clientId: "000000000000-xxx0.apps.googleusercontent.com",
-    clientSecret: "XxxxxXXxX0xxxxxxxx0XXxX0",
-    refreshToken: "1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx",
-    accessToken: "ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x",
-    expires: 1484314697598,
-    },
-		debug: true
-	  });
+	var smtpTransport = nodemailer.createTransport(
+		sendgridTransport({
+		  auth: {
+			api_key: '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'
+		  }
+		})
+	  );
+	
 
 
 // SHOW LIST OF USERS
@@ -1342,7 +1335,9 @@ app.post('/sendEmail/(:id)',function(req,res){
     var mailOptions={
         to: user.email,
         subject : user.subject,
-        text : user.message
+        text : user.message,
+        from: 'niyimukundacheline@gmail.com',
+        html: `<p> ${user.message} </p>`
     }
     console.log(mailOptions);
     smtpTransport.sendMail(mailOptions, function(error, response){
@@ -1350,9 +1345,8 @@ app.post('/sendEmail/(:id)',function(req,res){
         console.log(error);
         res.end("error");
      } else{
-			console.log("Message sent: " + response.message);
-			req.flash('success', 'Email Sent Successfully!');
-			res.redirect('/');	
+		res.redirect('/');
+		req.flash('success', 'Email Sent Successfully!');		
         }
     });
 });
