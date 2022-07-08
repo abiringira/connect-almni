@@ -38,7 +38,7 @@ const sendgridTransport = require('nodemailer-sendgrid-transport');
 	var smtpTransport = nodemailer.createTransport(
 		sendgridTransport({
 		  auth: {
-			api_key: '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'
+			api_key: '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'
 		  }
 		})
 	  );
@@ -1336,7 +1336,7 @@ app.post('/sendEmail/(:id)',function(req,res){
         to: user.email,
         subject : user.subject,
         text : user.message,
-        from: 'niyimukundacheline@gmail.com',
+        from: 'abiringiraemmanuel@gmail.com',
         html: `<p> ${user.message} </p>`
     }
     console.log(mailOptions);
